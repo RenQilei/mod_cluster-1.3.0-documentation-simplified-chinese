@@ -9,9 +9,9 @@
 下载最新的 httpd 和 [java 发行包](http://www.jboss.org/mod_cluster/ downloads/latest.html) [http://www.jboss.org/mod_cluster/
 downloads/latest.html]。如果没有适合你的操作系统或系统架构的预集成好的 httpd 安装包，你可以从源文件 [缺少锚点链接]自行构建二进制文件。
 
-## 2.2. Install the httpd binary
+## 2.2. 安装 httpd 二进制文件
 
-### 2.2.1. Install the whole httpd
+### 2.2.1. 安装完整的 httpd
 
 The httpd-side bundles are gzipped tars and include a full httpd install. As they contain already an Apache httpd install you don't need to download Apache httpd. Just extract them in root, e.g.
 
