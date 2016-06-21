@@ -74,8 +74,7 @@ mod_cluster 使用共享的内存来保证节点描述的同步，共享的内�
 
 与此同时，你可以通过使用 Git 仓库的源文件来构建：
 
-[https://github.com/modcluster/mod_cluster/tagsrelease/](https://github.com/modcluster/mod_cluster/tagsrelease/) [https://github.com/modcluster/
-mod_cluster/tags]
+[https://github.com/modcluster/mod_cluster/tagsrelease/](https://github.com/modcluster/mod_cluster/tagsrelease/) [https://github.com/modcluster/mod_cluster/tags]
 
 * 构建 httpd modules [缺少锚点链接]
 * 构建 server-side components [缺少锚点链接]
@@ -90,25 +89,24 @@ mod_cluster/tags]
 
 ## 1.7. 迁移
 
-Migrating from mod_jk or mod_proxy is fairly straight forward. In general, much of the configuration previously found in httpd.conf is now defined in the application server nodes.
+从 mod_jk 和 mod_proxy 迁移基本上是没有什么问题的。总的来说，绝大多数之前在 httpd.conf 中才能找到的配置项现在都在应用服务器节点上定义了。
 
-* Migrating from mod_jk
-* Migrating from mod_proxy
+* 从 mod_jk [缺少锚点链接] 迁移
+* 从 mod_proxy [缺少锚点链接] 迁移
 
 ## 1.8. SSL 支持
 
-Both the request connections between httpd and the application server nodes, and the feedback channel between the nodes and httpd can be secured. The former is achieved via the
-mod_proxy_https module and a corresponding ssl-enabled HTTP connector in JBoss Web. The
-latter requires the mod_ssl module and explicit configuration in JBoss AS/Web.
+所有 httpd 和应用服务器节点间的请求连接和节点与 httpd 间的反馈通道都可以是安全的。前者通过 mod_proxy_https 模块和 JBoss Web 相应的支持 ssl 的 HTTP 连接器实现。后者则需要在 JBoss AS/Web 中引入 mod_ssl 模块和明确的配置。
 
 ## 1.9. 负载均衡示例应用
 
-The mod_cluster binary distribution for JBoss AS/JBossWeb/Tomcat includes a demo application that helps demonstrate how different server-side scenarios affect the routing of client requests by the load balancer. The demo application is located in the mod_cluster distribution's demo directory.
+提供给 JBoss AS/JBoss Web/Tomcat 的 mod_cluster 二进制发行包包含了一个示例应用来帮助展现在负载均衡下不同的服务器端场景是如何影响客户端的路由请求的。示例应用存放在 mod_cluster 发行包的 demo 文件夹下。
 
-> **Strong cryptography warning**
+> **高强度加密警告**
 > 
-> mod_cluster contains mod_ssl, therefore the following warning (copied from OpenSSL [http://www.openssl.org/]) applies:
-> PLEASE REMEMBER THAT EXPORT/IMPORT AND/OR USE OF STRONG CRYPTOGRAPHY SOFTWARE, PROVIDING CRYPTOGRAPHY HOOKS OR EVEN JUST COMMUNICATING TECHNICAL DETAILS ABOUT CRYPTOGRAPHY SOFTWARE IS ILLEGAL IN SOME PARTS OF THE WORLD. SO, WHEN YOU IMPORT THIS PACKAGE TO YOUR COUNTRY, RE-DISTRIBUTE IT FROM THERE OR EVEN JUST EMAIL TECHNICAL SUGGESTIONS OR EVEN SOURCE PATCHES TO THE AUTHOR OR OTHER PEOPLE YOU ARE STRONGLY ADVISED TO PAY CLOSE ATTENTION TO ANY EXPORT/IMPORT AND/OR USE LAWS WHICH APPLY TO YOU. THE AUTHORS OF OPENSSL ARE NOT LIABLE FOR ANY VIOLATIONS YOU MAKE HERE. SO BE CAREFUL, IT IS YOUR RESPONSIBILITY.
+> mod_cluster 包含了 mod_ssl，因此请注意下列警告（转载自 [OpenSSL](http://www.openssl.org/) [http://www.openssl.org/]）：
+> 
+> 请牢记强加密软件的 导出/导入 和/或 使用，在一些地方，提供加密钩子或仅是讨论关于加密软件的技术细节是非法的。所以，当你在导入这个包，再分发它或者只是通过邮件提出技术建议或者仅是对作者或其他人提供源补丁，强烈建议你密切关注你所在的国家适用于你的关于 导出/导入 和/或 使用的法律。OpenSSL的作者不对你在这里做出的任何违法行为负责。所以请小心，这是你的责任。
 
 
 
