@@ -1,5 +1,10 @@
 # 简介
 
+```
+本文仍在翻译中。
+This documentation is still translating.
+```
+
 本文档为[《mod_cluster Documentation (1.3.0)》](http://docs.jboss.org/mod_cluster/1.3.0/)的简体中文译文版。
 
 本文档由任琦磊进行翻译。
