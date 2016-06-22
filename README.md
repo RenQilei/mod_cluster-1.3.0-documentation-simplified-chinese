@@ -1,7 +1,7 @@
 # 简介
 
 ```
-本文仍在翻译中。
+本文档仍在翻译中。
 This documentation is still translating.
 ```
 
