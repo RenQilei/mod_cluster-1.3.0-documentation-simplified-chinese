@@ -37,21 +37,21 @@ LoadModule proxy_http_module modules/mod_proxy_http.so
 
 ### 3.4.1. CreateBalancers
 
-CreateBalancers: Define how the balancer are created in the httpd VirtualHosts, this is to allow directives like:
+CreateBalancers: 定义在 httpd 的 VirtualHosts 中均衡器是如何被创建的，这允许通过像这样的指令来表达：
 
 ```
 ProxyPass / balancer://mycluster1/
 ```
 
-0: Create in all VirtualHosts defined in httpd.
+0: 在所有 httpd 中定义的 VirtualHosts 中创建。
 
-1: Don't create balancers (requires at least one ProxyPass/ProxyPassMatch to define the balancer names).
+1: 不创建均衡器（需要最少一个 ProxyPass/ProxyPassMatch 来定义均衡器的名字）。
 
-2: Create only the main server.
+2: 只在主服务器中创建。
 
-Default: 2
+默认: 2
 
-*Note:* When using 1 don't forget to configure the balancer in the ProxyPass directive, because the default is empty stickysession and nofailover=Off and the values received via the MCMP CONFIG message are ignored.
+*注意:* 当使用1时不要忘记在 ProxyPass 指令中配置均衡器，因为默认是空stickysession 和 nofailover=Off 且通过 MCMP 配置信息收到的值是被忽略的。
 
 ### 3.4.2. UseAlias
 
