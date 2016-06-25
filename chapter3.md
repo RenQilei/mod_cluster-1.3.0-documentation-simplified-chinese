@@ -83,30 +83,128 @@ lbfactor 是通过 STATUS 信息为节点接收到的。lbstatus 是重新计算
 lbstatus = (elected - oldelected) * 1000)/lbfactor;
 ```
 
-elected is the number of time the worker was elected.oldelected is elected last time the lbstatus was recalculated.The node with the lowest status is selected. Nodes with lbfactor # 0 are skipped by the both calculation logic.
+elected 是 worker（译者注：节点应用服务器）被选中的时间。oldelected 是 lbstatus 被选中的最后一次被重新计算的时间。最低状态的节点会被选中。带有 lbfactor 为 #0 的节点会被计算逻辑忽略。
 
 ### 3.4.4. WaitForRemove
 
-WaitForRemove: Time in seconds before a removed node is forgotten by httpd
+WaitForRemove: 在节点被移除前被 httpd 忽略的时间，按秒计算。
 
 Default: 10 seconds
 
 ### 3.4.5. ProxyPassMatch/ProxyPass
 
-ProxyPassMatch/ProxyPass: ProxyPassMatch and ProxyPass are mod_proxy directives that when using ! (instead the back-end url) prevent to reverse-proxy in the path. This could be used allow httpd to serve static information like images.
+ProxyPassMatch/ProxyPass: ProxyPassMatch 和 ProxyPass 是mod_cluster 指令， 当使用 ! (取代后台url)防止路径中的 reverse-proxy。这可能被用来允许 httpd 来处理（server）像图片这类的静态信息。
 
 ```
 ProxyPassMatch ^(/.*\.gif)$ !
 ```
 
-The above for example will allow httpd to server directly the .gif files.
+上面的例子将允许 httpd 直接处理（server） .gif 文件。
 
 ### 3.4.6. EnableOptions
 
-Use OPTIONS method to periodically check the active connection. Fulfils the same role as the CPING/CPONG used by AJP but for HTTP/HTTPS connections. The endpoint needs to implement at least HTTP/1.1.
+使用 OPTIONS 方法来周期性的检查有效的连接。满足相同的角色作为 CPING/CPONG 被 AJP 使用，但为了 HTTP/HTTPS 连接。（Fulfils the same role as the CPING/CPONG used by AJP but for HTTP/HTTPS connections.）端点需要至少由 HTTP/1.1 来实现。
 
-On (or no value): Use OPTIONS (default)
+On (or no value): 使用 OPTIONS (默认)
 
-Off: Don't use OPTIONS
+Off: 不使用 OPTIONS
+
+## 3.5. mod_manager
+
+The Context of a mod_manger directive is VirtualHost except mentioned otherwise. ```server config``` means that it must be outside a VirtualHost configuration. If not an error message will be displayed and httpd won't start.
+
+  mod_manager 指令的使用环境（Context）是虚拟主机（VirtualHost）除非你特意申明。```server config```表明它必须在 VirtualHost外配置。不然的话就会有错误信息显示，httpd也将不能启动。
+
+### 3.5.1. EnableMCPMReceive
+
+EnableMCPMReceive - Allow the VirtualHost to receive MCPM. Allow the VirtualHost to receive the MCPM from the nodes. You need one EnableMCPMReceive in your httpd configuration to allow mod_cluster to work, put it in the VirtualHost where you configure advertise.
+
+### 3.5.2. MemManagerFile
+
+MemManagerFile: That is the base name for the names mod_manager will use to store configuration, generate keys for shared memory or lock files. That must be an absolute path name; the directories will created if needed. It is highly recommended that those files are placed on a local drive and not an NFS share. (Context: server config)
+
+Default: $server_root/logs/
+
+### 3.5.3. Maxcontext
+
+Maxcontext: That is the number max of contexts supported by mod_cluster. (Context: server config)
+
+Default: 100
+
+### 3.5.4. Maxnode
+
+Maxnode: That is the number max nodes supported by mod_cluster. (Context: server config)
+
+Default: 20
+
+### 3.5.5. Maxhost
+Maxhost: That is the number max host (Aliases) supported by mod_cluster. That is also the max number of balancers. (Context: server config)
+
+Default: 20
+
+### 3.5.6. Maxsessionid
+
+Maxsessionid: That is the number of active sessionid we store to give number of active sessions in the mod_cluster-manager handler. A session is unactive when mod_cluster doesn't receive any information from the session in 5 minutes. (Context: server config)
+
+Default: 0 (the logic is not activated).
+
+### 3.5.7. MaxMCMPMaxMessSize
+
+MaxMCMPMaxMessSize: Maximum size of MCMP messages. from other Max directives.
+
+Default: calculated from other Max directives. Min: 1024
+
+### 3.5.8. ManagerBalancerName
+
+ManagerBalancerName: That is the name of balancer to use when the JBoss AS/JBossWeb/Tomcat doesn't provide a balancer name.
+
+Default: mycluster
+
+### 3.5.9. PersistSlots
+
+PersistSlots: Tell mod_slotmem to persist the nodes, Alias and Context in files. (Context: server config)
+
+Default: Off
+
+### 3.5.10. CheckNonce
+
+CheckNonce: Switch check of nonce when using mod_cluster-manager handler on | off Since 1.1.0.CR1
+
+Default: on Nonce checked
+
+### 3.5.11. AllowDisplay
+
+AllowDisplay: Switch additional display on mod_cluster-manager main page on | off Since 1.1.0.GA
+
+Default: off Only version displayed
+
+### 3.5.12. AllowCmd
+
+AllowCmd: Allow commands using mod_cluster-manager URL on | off Since 1.1.0.GA
+
+Default: on Commmands allowed
+
+### 3.5.13. ReduceDisplay
+
+ReduceDisplay - Reduce the information the main mod_cluster-manager page to allow more nodes in the page. on | off
+
+Default: off Full information displayed
+
+### 3.5.14. SetHandler mod_cluster-manager
+
+SetHandler mod_cluster-manager: That is the handler to display the node mod_cluster sees from the cluster. It displays the information about the nodes like INFO and additionaly counts the number of active sessions.
+
+```
+<Location /mod_cluster_manager>
+SetHandler mod_cluster-manager
+Order deny,allow
+Deny from all
+Allow from 127.0.0.1
+</Location>
+```
+
+When accessing the location you define in httpd.conf you get something like:
+
+
 
 
