@@ -55,29 +55,29 @@ ProxyPass / balancer://mycluster1/
 
 ### 3.4.2. UseAlias
 
-UseAlias: Check that the Alias corresponds to the ServerName (See [Host Name Aliases](http://labs.jboss.com/file-access/default/members/jbossweb/freezone/docs/latest/config/host.html) [http://labs.jboss.com/file-access/default/members/jbossweb/freezone/docs/latest/config/host.html])
+UseAlias: 检查和 ServerName（参见 [主机名别名](http://labs.jboss.com/file-access/default/members/jbossweb/freezone/docs/latest/config/host.html) [http://labs.jboss.com/file-access/default/members/jbossweb/freezone/docs/latest/config/host.html]） 相应的别名。
 
-Off: Don't check (ignore Aliases)
+Off: 不检查 (忽略别名)
 
-On: Check aliases
+On: 检查别名
 
-Default: Off Ignore the Alias information from the nodes.
+Default: 关闭，忽略从节点来的别名信息。
 
-*Versions older than 1.3.1.Final only accept values 0 and 1 respectively.*
+*版本比 1.3.1.Final 更老的只支持相应的 0 和 1 两个值。*
 
 ### 3.4.3. LBstatusRecalTime
 
-LBstatusRecalTime: Time interval in seconds for loadbalancing logic to recalculate the status of a node
+LBstatusRecalTime: 负载均衡逻辑来重新计算节点的状态的时间间隔，按秒（seconds）计算。
 
-Default: 5 seconds
+Default: 5 秒
 
-The actual formula to recalculate the status of a node is:
+实际重新计算节点状态的公式是：
 
 ```
 status = lbstatus + (elected - oldelected) * 1000)/lbfactor;
 ```
 
-lbfactor is received for the node via STATUS messages.lbstatus is recalculated every LBstatusRecalTime seconds using the formula:
+lbfactor 是通过 STATUS 信息为节点接收到的。lbstatus 是重新计算每个 LBstatusRecalTime 秒数使用的公式：
 
 ```
 lbstatus = (elected - oldelected) * 1000)/lbfactor;
