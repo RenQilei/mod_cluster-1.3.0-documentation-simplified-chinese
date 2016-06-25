@@ -111,17 +111,15 @@ Off: 不使用 OPTIONS
 
 ## 3.5. mod_manager
 
-The Context of a mod_manger directive is VirtualHost except mentioned otherwise. ```server config``` means that it must be outside a VirtualHost configuration. If not an error message will be displayed and httpd won't start.
-
-  mod_manager 指令的使用环境（Context）是虚拟主机（VirtualHost）除非你特意申明。```server config```表明它必须在 VirtualHost外配置。不然的话就会有错误信息显示，httpd也将不能启动。
+mod_manager 指令的使用环境（Context）是虚拟主机（VirtualHost）除非你特意申明。```server config```表明它必须在 VirtualHost外配置。不然的话就会有错误信息显示，httpd也将不能启动。
 
 ### 3.5.1. EnableMCPMReceive
 
-EnableMCPMReceive - Allow the VirtualHost to receive MCPM. Allow the VirtualHost to receive the MCPM from the nodes. You need one EnableMCPMReceive in your httpd configuration to allow mod_cluster to work, put it in the VirtualHost where you configure advertise.
+EnableMCPMReceive - 允许 VirtualHost 接收 MCPM。允许 VirtualHost 接收来自节点的 MCPM。你需要在你的 httpd 配置中添加 EnableMCPMReceive 来允许 mod_cluster 工作，在你需要配置广告（advertise）的地方配置它。
 
 ### 3.5.2. MemManagerFile
 
-MemManagerFile: That is the base name for the names mod_manager will use to store configuration, generate keys for shared memory or lock files. That must be an absolute path name; the directories will created if needed. It is highly recommended that those files are placed on a local drive and not an NFS share. (Context: server config)
+MemManagerFile: 这是其它名字的基名字（base name），mod_manager 用来为共享的内存或锁定文件（lock file）保存配置和创建秘钥（key）。它必需是一个绝对路径名；且如果需要的话会创建文件目录。这里强烈推荐把文件存放在本地磁盘中，而不是 NFS 共享。（上下文环境：服务器配置）
 
 Default: $server_root/logs/
 
