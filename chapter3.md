@@ -27,7 +27,7 @@ LoadModule proxy_http_module modules/mod_proxy_http.so
 
 ## 3.2. mod_proxy 配置
 
-像 ProxyIOBufferSiz 这样的 mod_cluster 指令可以被使用于配置 mod_cluster 中。不需要使用 ProxyPass 指令因为 mod_cluster 对 URL 应该被转发到哪台 JBoss Web 做了自动的配置。
+像 ProxyIOBufferSize 这样的 mod_cluster 指令可以被使用于配置 mod_cluster 中。不需要使用 ProxyPass 指令因为 mod_cluster 对 URL 应该被转发到哪台 JBoss Web 做了自动的配置。
 
 ## 3.3. mod_slotmem 配置
 
@@ -125,13 +125,13 @@ Default: $server_root/logs/
 
 ### 3.5.3. Maxcontext
 
-Maxcontext: That is the number max of contexts supported by mod_cluster. (Context: server config)
+Maxcontext: 被 mod_cluster 支持的上下文环境（contexts）的最大数量。（上下文环境：服务器环境，Context: server config）
 
 Default: 100
 
 ### 3.5.4. Maxnode
 
-Maxnode: That is the number max nodes supported by mod_cluster. (Context: server config)
+Maxnode: 被 mod_cluster 支持的最大节点数。(Context: server config)
 
 Default: 20
 
