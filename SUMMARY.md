@@ -5,4 +5,5 @@
 * [第二章 快速入手指南](chapter2.md)
 * [第三章 httpd 配置](chapter3.md)
 * [第四章 创建 httpd 模块](chapter4.md)
+* 第五章 安装 httpd 模块
 
