@@ -203,7 +203,7 @@ Allow from 127.0.0.1
 
 当访问你在 httpd.conf 中定义的路径时你可以获得像下面所示的东西：
 
-![mod_cluster_status](Mod_cluster-UserGuide-1.3.jpg) 
+![浏览器中查看 mod_cluster 状态](mod_cluster_status_in_browser.jpg) 
 
 注意：
 
