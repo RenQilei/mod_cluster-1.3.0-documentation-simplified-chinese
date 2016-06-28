@@ -58,7 +58,7 @@ NOTE: You can ignore the libtool message on most platform:
 libtool: install: warning: remember to run `libtool --finish apache_installation_directory/modules'
 ```
 
-Once that is done use [Apache httpd configuration](chapter3.md##3.1) to configure mod_cluster.
+Once that is done use [Apache httpd configuration](chapter3.md) to configure mod_cluster.
 
 ## 4.3. Build the mod_proxy module
 
