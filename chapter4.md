@@ -1,12 +1,11 @@
-# 第四章 创建 httpd 模块
+# 第四章 构建 httpd 模块
 
-## 4.1. Build a patched httpd from it sources
+## 4.1. 从它的源文件构建一个打补丁的 httpd
 
-To build httpd-2.2.x from its sources see ASF httpd doc [http://httpd.apache.org/docs/2.2/
-install.html]
+从它的源文件来构建一个 httpd-2.2.x，请参见 [ASF httpd 文档](http://httpd.apache.org/docs/2.2/install.html) [http://httpd.apache.org/docs/2.2/install.html]
 
-If needed, patch the httpd-2.2.x sources with (The patch prevents long waiting time when the node IP can't be resolved that should not happen so you can skip the patch part if you don't want to rebuild httpd). mod_proxy_ajp.patch [https://github.com/modcluster/mod_cluster/blob/master/
-native/mod_proxy_cluster/mod_proxy_ajp.patch]
+如果需要，可以和 [mod_proxy_ajp.patch](https://github.com/modcluster/mod_cluster/blob/master/ native/mod_proxy_cluster/mod_proxy_ajp.patch) [https://github.com/modcluster/mod_cluster/blob/master/
+native/mod_proxy_cluster/mod_proxy_ajp.patch] 来给 httpd-2.2.x 源文件打补丁（不定防止当节点 IP 不能被决定这样不该发生的事造成长时间等待时，如果你不想要重新构建 httpd，你可以跳过补丁这部分）。
 
 ```
 (cd modules/proxy
@@ -14,7 +13,7 @@ native/mod_proxy_cluster/mod_proxy_ajp.patch]
 )
 ```
 
-Configure httpd with something like:
+像下面这样配置 httpd：
 
 ```
 ./configure --prefix=apache_installation_directory \
@@ -31,17 +30,17 @@ Configure httpd with something like:
 
 Rebuild (make) and reinstall (make install) after that.
 
-## 4.2. Build the 4 modules of mod_cluster
+## 4.2. 构建 mod_cluster 的 4 个模块
 
-You need an httpd installation with mod_proxy (--enable-proxy) and ajp protocol (--enable-proxyajp) enabled and with dso enabled (--enable-so)
+你需要安装 httpd，包括启用的 mod_proxy (--enable-proxy) 和 ajp 协议 (--enable-proxyajp)，和启用的 dso (--enable-so)。
 
-Download the mod_cluster sources:
+下载 mod_cluster 源文件：
 
 ```
 git clone git://github.com/modcluster/mod_cluster.git
 ```
 
-Build the mod_cluster modules components, for each subdirectory advertise, mod_manager, mod_proxy_cluster and mod_slotmem do something like:
+构建 mod_cluster 模块组件，为每个子目录 advertise, mod_manager, mod_proxy_cluster 和 mod_slotmem 做如下处理：
 
 ```
 sh buildconf
@@ -50,16 +49,16 @@ make
 cp *.so apache_installation_directory/modules
 ```
 
-Where apache_installation_directory is the location of an installed version of httpd-2-2.x.
+apache_installation_directory 是 httpd-2.2.x 的已安装的版本的路径。
 
-NOTE: You can ignore the libtool message on most platform:
+注意：你可以在绝大多数平台上忽略 libtool 信息：
 
 ```
 libtool: install: warning: remember to run `libtool --finish apache_installation_directory/modules'
 ```
 
-Once that is done use [Apache httpd configuration](chapter3.md) to configure mod_cluster.
+一旦完成，使用 [Apache httpd 配置](chapter3.md) 中所述来配置 mod_cluster。
 
-## 4.3. Build the mod_proxy module
+## 4.3. 构建 mod_proxy 模块
 
-It is only needed for httpd-2.2.x where x < 11. Process like the other mod_cluster modules.
+它仅在 httpd-2.2.x 且 x<11 时需要。处理类似于其他 mod_cluster 模块。
