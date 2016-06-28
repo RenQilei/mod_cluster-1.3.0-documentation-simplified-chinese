@@ -136,61 +136,61 @@ Maxnode: 被 mod_cluster 支持的最大节点数。(Context: server config)
 Default: 20
 
 ### 3.5.5. Maxhost
-Maxhost: That is the number max host (Aliases) supported by mod_cluster. That is also the max number of balancers. (Context: server config)
+Maxhost: 被 mod_cluster 支持的最大主机（别名）数。这也是均衡器的最大数。(Context: server config)
 
 Default: 20
 
 ### 3.5.6. Maxsessionid
 
-Maxsessionid: That is the number of active sessionid we store to give number of active sessions in the mod_cluster-manager handler. A session is unactive when mod_cluster doesn't receive any information from the session in 5 minutes. (Context: server config)
+Maxsessionid: 在 mod_cluster-manager 处理（handler）中我们存储来提供活跃 session 编号的活跃 sessionid 的编号。mod_cluster 五分钟内没有从 session 中接收到任何信息的话 session 会变更为 不活跃的（unactive）。(Context: server config)
 
-Default: 0 (the logic is not activated).
+Default: 0 (逻辑没有启用).
 
 ### 3.5.7. MaxMCMPMaxMessSize
 
-MaxMCMPMaxMessSize: Maximum size of MCMP messages. from other Max directives.
+MaxMCMPMaxMessSize: MCMP 信息的最大大小。来自其它最大指令。
 
-Default: calculated from other Max directives. Min: 1024
+Default: 计算来自其它的最大指令。 Min: 1024
 
 ### 3.5.8. ManagerBalancerName
 
-ManagerBalancerName: That is the name of balancer to use when the JBoss AS/JBossWeb/Tomcat doesn't provide a balancer name.
+ManagerBalancerName: 当 JBoss AS/JBossWeb/Tomcat 不提供均衡器名字时使用的均衡器的名字。
 
 Default: mycluster
 
 ### 3.5.9. PersistSlots
 
-PersistSlots: Tell mod_slotmem to persist the nodes, Alias and Context in files. (Context: server config)
+PersistSlots: 告诉 mod_slotmem 将节点（nodes），别名（alias）和上下文环境（Context）保留在文件中。(Context: server config)
 
 Default: Off
 
 ### 3.5.10. CheckNonce
 
-CheckNonce: Switch check of nonce when using mod_cluster-manager handler on | off Since 1.1.0.CR1
+CheckNonce: 从 1.1.0.CR1 开始，当使用 mod_cluster-manager 处理时切换随机数（nonce）检查 on | off。
 
 Default: on Nonce checked
 
 ### 3.5.11. AllowDisplay
 
-AllowDisplay: Switch additional display on mod_cluster-manager main page on | off Since 1.1.0.GA
+AllowDisplay: 从 1.1.0.GA 开始，在 mod_cluster-manager 主页（main page）上切换额外的显示 on | off
 
 Default: off Only version displayed
 
 ### 3.5.12. AllowCmd
 
-AllowCmd: Allow commands using mod_cluster-manager URL on | off Since 1.1.0.GA
+AllowCmd: 从 1.1.0.GA 开始，允许命令使用 mod_cluster-manager 的 URL on | off
 
 Default: on Commmands allowed
 
 ### 3.5.13. ReduceDisplay
 
-ReduceDisplay - Reduce the information the main mod_cluster-manager page to allow more nodes in the page. on | off
+ReduceDisplay - 减少主 mod_cluster-manager 页面的信息来允许页面中更多的节点信息。 on | off
 
 Default: off Full information displayed
 
 ### 3.5.14. SetHandler mod_cluster-manager
 
-SetHandler mod_cluster-manager: That is the handler to display the node mod_cluster sees from the cluster. It displays the information about the nodes like INFO and additionaly counts the number of active sessions.
+SetHandler mod_cluster-manager: 处理器来显示 mod_cluster 从 cluster 中观察到的节点。它显示了像 INFO 关于节点的信息和额外的活跃session的数量统计。
 
 ```
 <Location /mod_cluster_manager>
@@ -201,8 +201,89 @@ Allow from 127.0.0.1
 </Location>
 ```
 
-When accessing the location you define in httpd.conf you get something like:
+当访问你在 httpd.conf 中定义的路径时你可以获得像下面所示的东西：
 
+![mod_cluster_status](Mod_cluster-UserGuide-1.3.jpg) 
 
+注意：
 
+Transferred: Corresponds to the POST data send to the back-end server.
+Connected: Corresponds to the number of requests been processed when the mod_cluster status page was requested.
 
+Transferred: 对应于发送到后台服务器的 POST 数据。
+
+Connected: 对应于当 mod_cluster 状态页面被请求时已处理的请求数量。
+
+Sessions: 对应于 mod_cluster 报告为活跃的 session 的数量（过去5分钟期间内此处有一个请求）。当 Maxsessionid 是 0 时，这里则不会展示。
+
+## 3.6. mod_advertise
+
+mod_advertis 使用了多路广播包来广告 mod_manager定义的配置必须为相同的 VirtualHost。当然至少一个 mod_advertise 必须是在 VirtualHost 中来允许 mod_cluster 找到正确的 IP 和端口来提供给 ClusterListener。
+
+### 3.6.1. ServerAdvertise
+
+ServerAdvertise On: 使用广告机制来告诉 JBoss AS/JBossWeb/Tomcat 应该把集群的信息发送给谁。
+
+ServerAdvertise On http://hostname:port: 告诉可供使用的主机名字和端口。仅在 VirtualHost 定义不正确时才需要，如果 VirtualHost 是一个基于名字的虚拟主机 [http://
+httpd.apache.org/docs/2.2/vhosts/name-based.html] 或者当 VirtualHost 未被使用时。
+
+ServerAdvertise Off: 不使用广告机制。
+
+Default: Off.（任何在一个 VirtualHost在自己里面设置广告指令为 On）
+
+### 3.6.2. AdvertiseGroup
+
+AdvertiseGroup IP:port: 可供使用的多路广播的地址（譬如像 232.0.0.2:8888 这样的）。在 JBoss AS/JBossWeb/Tomcat 的配置中，IP 应该对应于 AdvertiseGroupAddress，而端口（Port）对应于 AdvertisePort。注意如果 JBoss AS 启用了且 -u startup switch 被包含在了 AS 启动命令中，默认的 AdvertiseGroupAddress 是通过 -u 传递来的值。如果端口丢失了，则默认端口号将是：23364。
+
+Default: 224.0.1.105:23364.
+
+### 3.6.3. AdvertiseFrequency
+
+AdvertiseFrequency seconds[.miliseconds]: 多路广播广告 IP 和端口信息的间隔时间，
+
+Default: 10 Ten seconds.
+
+### 3.6.4. AdvertiseSecurityKey
+
+AdvertiseSecurityKey value: 用来验证广告校验和的秘钥字符串。如果被配置在了任意一边，则验证是必须的。两边必须使用相同的安全秘钥。
+
+Default: No default value.
+
+### 3.6.5. AdvertiseManagerUrl
+
+AdvertiseManagerUrl value: 这个版本中不使用（这是在 X-Manager-Url 中发送的：头部值（value header））。这是 JBoss AS/JBossWeb/Tomcat 应该使用来发送信息到 mod_cluster 的 URL。
+
+Default: 没有默认值。信息不被发送。
+
+### 3.6.6. AdvertiseBindAddress
+
+AdvertiseBindAddress IP:port: httpd 绑定的用来发送多路广播信息的地址和端口。允许在多个 IP 地址盒子（IP address boxes）上指明一个地址。
+
+Default: 0.0.0.0:23364
+
+## 3.7. 最小化示例
+
+```
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+LoadModule slotmem_module modules/mod_slotmem.so
+LoadModule manager_module modules/mod_manager.so
+LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
+LoadModule advertise_module modules/mod_advertise.so
+
+Listen 10.33.144.3:6666
+<VirtualHost 10.33.144.3:6666>
+  <Location />
+    Order deny,allow
+    Deny from all
+    Allow from 10.33.144.
+  </Location>
+  
+  KeepAliveTimeout 60
+  MaxKeepAliveRequests 0
+  
+  ManagerBalancerName mycluster
+  ServerAdvertise On
+  EnableMCPMReceive
+</VirtualHost>
+```
