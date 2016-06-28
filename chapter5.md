@@ -6,19 +6,18 @@
 
 ## 5.1. 配置
 
-A minimal configuration is needed in httpd (See httpd.conf). A listener must be a added in JBossWEB conf/server.xml (See Configuring JBoss AS/Web).
-需要在 httpd（参见 [httpd.conf](chapter3.md)）中做最小化的配置。在 JBossWEB conf/server.xml (参见 Configuring JBoss AS/Web)中必须添加监听器。
+需要在 httpd（参见 [httpd.conf](chapter3.md)）中做最小化的配置。在 JBossWEB conf/server.xml (参见 [配置 JBoss AS/Web](chapter6.md))中必须添加监听器。
 
-## 5.2. Installing and using the bundles
+## 5.2. 安装和使用安装套件
 
-The bundles are tar.gz on POSIX platforms just extract them in root something like:
+安装套件是在 POSIX 平台上的 tar.gz 文件，只有像下面这样把它们解压到根目录（root）即可：
 
 ```
 cd /
 tar xvf mod-cluster-1.x.y-linux2-x86-ssl.tar.gz
 ```
 
-The httpd.conf is located in /opt/jboss/httpd/httpd/conf to quick test just add something like:
+httpd.conf 位于 ```/opt/jboss/httpd/httpd/conf```，快速测试只需要添加如下内容：
 
 ```
 Listen 10.33.144.3:6666
@@ -37,10 +36,10 @@ Listen 10.33.144.3:6666
 </VirtualHost>
 ```
 
-To start httpd do the following:
+按如下方式开启 httpd:
 
 ```
 /opt/jboss/httpd/sbin/apachectl start
 ```
 
-NOTE: Make sure to use SSL before going in production.
+注意：确保在进入生产前使用 SSL。
