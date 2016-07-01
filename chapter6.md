@@ -2,7 +2,7 @@
 
 ## 6.1. JBoss AS
 
-mod_cluster is supported in AS7 via the modcluster subsystem See AS7.
+mod_cluster is supported in AS7 via the modcluster subsystem See AS7 [缺少锚链接].
 
 In other AS version mod_cluster's configuration resides within the following file:```$JBOSS_HOME/server/$PROFILE/deploy/mod_cluster.sar/META-INF/mod_cluster-jbossbeans.xml```file.
 
