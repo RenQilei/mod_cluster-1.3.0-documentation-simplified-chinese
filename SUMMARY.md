@@ -9,5 +9,5 @@
 * [第六章 服务器端（worker-side）配置](chapter6.md)
 * [第七章 AS7 modcluster subsystem 配置](chapter7.md)
 * [第八章 构建服务器端组件](chapter8.md)
-* 第九章 服务器端配置属性
+* [第九章 服务器端配置属性](chapter9.md)
 
