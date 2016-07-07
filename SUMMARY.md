@@ -8,4 +8,5 @@
 * [第五章 安装 httpd 模块](chapter5.md)
 * [第六章 服务器端（worker-side）配置](chapter6.md)
 * [第七章 AS7 modcluster subsystem 配置](chapter7.md)
+* 第八章 构建服务器端组件
 
