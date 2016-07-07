@@ -2,18 +2,18 @@
 
 ## 6.1. JBoss AS
 
-mod_cluster is supported in AS7 via the modcluster subsystem See AS7 [缺少锚链接].
+参见 AS7 [缺少锚链接]，mod_cluster 在 AS7 中已通过 modcluser 子系统（subsystem）获得支持。
 
-In other AS version mod_cluster's configuration resides within the following file:```$JBOSS_HOME/server/$PROFILE/deploy/mod_cluster.sar/META-INF/mod_cluster-jbossbeans.xml```file.
+在其他 AS 版本中 mod_cluster 的配置在下面的文件中：```$JBOSS_HOME/server/$PROFILE/deploy/mod_cluster.sar/META-INF/mod_cluster-jbossbeans.xml```
 
-The entry point for mod_cluster's server-side configuration is the ModClusterListener bean, which delegates web container (i.e. JBoss Web) specific events to a container agnostic event handler.
+mod_cluster 服务器端配置的入口点是 ```ModClusterListener bean```，来指派 web 容器（如 JBoss Web）的特定事件到一个与事件处理无关的容器。
 
-In general, the ModClusterListener bean defines:
+总的来说，```ModClusterListener bean```是这样定义的：
 
-1. A ContainerEventHandler in which to handle events from the web container.
-2. A reference to the JBoss mbean server.
+1. 一个从 web 容器处理事件的 ContainerEventHandler。
+2. 一个 JBoss mbean 服务器的索引。
 
-e.g.
+例如：
 
 ```
 <bean name="ModClusterListener" class="org.jboss.modcluster.container.jbossweb.JBossWebEventHandlerAdapter">
@@ -30,14 +30,14 @@ e.g.
 
 ### 6.1.1. Non-clustered mode
 
-In non-clustered mode, each JBoss AS node communicates with the load balancer directly, and do not communicate with each other. Non-clustered mode is configured via the ```ModClusterService``` bean.
+非 cluster 模式（non-clustered mode）中，每个 JBoss AS 节点会直接与负载均衡器通信，而不会相互间通信。非 cluster 模式通过 ```ModClusterService bean``` 来配置。
 
-In general, the ```ModClusterService``` bean defines:
+总的来说, ```ModClusterService bean``` 定义如下:
 
-1. An object containing mod_cluster's configuration properties [缺少锚链接].
-2. An object responsible for calculating the load balance factor for this node. This is described in detail in the chapter entitled Server-Side Load Metrics [缺少锚链接].
+1. 一个包含 mod_cluster 配置属性 [缺少锚链接]的对象。
+2. 一个负责为节点计算负载均衡因素的对象。细节将在 服务器端负载度量衡 [缺少锚链接]这个一章节中描述。
 
-e.g.
+例如：
 
 ```
 <bean name="ModClusterService" class="org.jboss.modcluster.ModClusterService" mode="OnDemand">
@@ -53,11 +53,11 @@ annotation>
 </bean>
 ```
 
-### 6.1.2. Configuration Properties
+### 6.1.2. 配置属性
 
-The ModClusterConfig bean enumerates the configuration properties used by mod_cluster. For the complete list of configuration properties and their default values, see the chapter entitled Server-side Configuration Properties.
+```ModClusterConfig bean``` 列举了 mod_cluster 使用的配置属性。配置属性的完整列表和它们的默认值参见服务器端配置属性一章。
 
-e.g.
+例如：
 
 ```
 <bean name="ModClusterConfig" class="org.jboss.modcluster.config.ModClusterConfig" mode="On Demand">
@@ -65,11 +65,11 @@ e.g.
 </bean>
 ```
 
-### 6.1.3. Connectors
+### 6.1.3. 连接器（Connectors）
 
-Like mod_jk and mod_proxy_balancer, mod_cluster requires a connector in your server.xml to which to forward web requests. Unlike mod_jk and mod_proxy_balancer, mod_cluster is not confined to AJP, but can use HTTP as well. While AJP is generally faster, an HTTP connector can optionally be secured via SSL. If multiple possible connectors are defined in your server.xml, mod_cluster uses the following algorithm to choose between them:
+像 mod_jk 和 mod_proxy_balancer 一样，mod_cluster 在你的```sever.xml```中需要一个连接器来转发 web 请求。不同于 mod_jk 和 mod_cluster_balancer 的是，mod_cluster 并不限制于 AJP，而是也可以使用 HTTP。尽管 AJP 整体上可以更快，但一个 HTTP 的连接器则可以选择通过 SSL 来加密。如果你在你的```server.xml```里定义了多个可能的连接器，mod_cluster 则使用如下算法来选择它们：
 
-1. If an native (APR) AJP connector is available, use it.
-2. If an AJP connector is available, use it.
-3. Otherwise, choose the HTTP connector with the highest max threads.
+1. 如有一个本地（APR）AJP 连接器可用，则使用。
+2. 如 AJP 连接器可用，则使用。
+3. 否则，选择 HTTP 连接器，并使用最大量线程数。
 
