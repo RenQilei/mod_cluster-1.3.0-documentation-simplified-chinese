@@ -127,7 +127,7 @@ UDP 组播 ```address:port``` 来监听 httpd 代理的组播广告。需要小�
 
 | Attribute | AS7 Attribute | Default | Scope | Description |
 | -- | -- | -- | -- | -- |
-| stickySession | sticky-session | true | Balancer | Indicates whether subsequent requests for a given session should be routed to the same node, if possible. |
+| stickySession | sticky-session | true | Balancer | 如果可能，用以指明后续给定会话（session）的请求是否应该被路由到相同节点。 |
 | stickySessionRemove | sticky-session-remove | false | Balancer | Indicates whether the httpd proxy should remove session stickiness in the event that the balancer is unable to route a request to the node to which it is stuck. This property is ignored if stickySession is false. |
 | stickySessionForce | sticky-session-force | false | Balancer | Indicates whether the httpd proxy should return an error in the event that the balancer is unable to route a request to the node to which it is stuck. This property is ignored if stickySession is false. |
 | workerTimeout | worker-timeout | -1 | Balancer | Number of seconds to wait for a worker to become available to handle a request. When no workers of a balancer are usable, mod_cluster will retry after a while (workerTimeout/100). That is timeout in the balancer mod_proxy documentation. A value of -1 indicates that the httpd will not wait for a worker to be available and will return an error if none is available. |
