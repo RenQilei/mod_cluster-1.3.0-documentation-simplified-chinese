@@ -128,13 +128,13 @@ UDP 组播 ```address:port``` 来监听 httpd 代理的组播广告。需要小�
 | Attribute | AS7 Attribute | Default | Scope | Description |
 | -- | -- | -- | -- | -- |
 | stickySession | sticky-session | true | Balancer | 如果可能，用以指明后续给定会话（session）的请求是否应该被路由到相同节点。 |
-| stickySessionRemove | sticky-session-remove | false | Balancer | Indicates whether the httpd proxy should remove session stickiness in the event that the balancer is unable to route a request to the node to which it is stuck. This property is ignored if stickySession is false. |
-| stickySessionForce | sticky-session-force | false | Balancer | Indicates whether the httpd proxy should return an error in the event that the balancer is unable to route a request to the node to which it is stuck. This property is ignored if stickySession is false. |
-| workerTimeout | worker-timeout | -1 | Balancer | Number of seconds to wait for a worker to become available to handle a request. When no workers of a balancer are usable, mod_cluster will retry after a while (workerTimeout/100). That is timeout in the balancer mod_proxy documentation. A value of -1 indicates that the httpd will not wait for a worker to be available and will return an error if none is available. |
-| maxAttempts | max-attempts | 1 | Balancer | Number of times an httpd proxy will attempt to send a given request to a worker before giving up. The minimum value is 1, meaning try only once. (Note that mod_proxy default is also 1: no retry). |
+| stickySessionRemove | sticky-session-remove | false | Balancer | 在均衡器不能够路由请求到一个阻塞节点的情况下， 指明httpd 代理是否应该移除会话粘性（session stickiness）。在 ```stickySession``` 为 ```false``` 时，这个属性（property）会被忽略。 |
+| stickySessionForce | sticky-session-force | false | Balancer | 在均衡器不能够将请求路由到一个受阻的节点时，指明 httpd 代理是否应该返回一个错误。在 ```stickySession``` 为 ```false``` 时，这个属性（property）会被忽略。 |
+| workerTimeout | worker-timeout | -1 | Balancer | 等待一个节点可以成为有效的可以处理请求的worker所需秒数。当均衡器没有可用的worker时，mod_cluster 将稍等片刻（workerTimeout/100）并重试。这个超时在均衡器 mod_proxy 的文档中有描述。值为 -1 时表明 httpd 将不会等待到 worker 有效为止，而是如果无可用 worker，则直接返回错误。 |
+| maxAttempts | max-attempts | 1 | Balancer | httpd 代理尝试发送给定请求到worker直到放弃前的秒数。最小值为1，表示只尝试一次。（注意 mod_proxy 默认也是1：不重试）。 |
 | flushPackets | flush-packets | false | Node | Enables/disables packet flushing |
-| flushWait | flush-wait | -1 | Node | Time to wait before flushing packets in milliseconds. A value of -1 means wait forever. |
-| ping | ping | 10 | Node | Time (in seconds) in which to wait for a pong answer to a ping |
+| flushWait | flush-wait | -1 | Node | 清除包前等待的时间，以毫秒计。值为-1时表示永远等待。 |
+| ping | ping | 10 | Node | 等待 pong 来回应 ping 的时间（以秒计） |
 | smax | smax | Determined by httpd configuration | Node | Soft maximum idle connection count (that is the smax in worker mod_proxy documentation). The maximum value depends on the httpd thread configuration (ThreadsPerChild or 1). |
 | ttl | ttl | 60 | Node | Time to live (in seconds) for idle connections above smax |
 | nodeTimeout | node-timeout | -1 | Node | Timeout (in seconds) for proxy connections to a node. That is the time mod_cluster will wait for the back-end response before returning error. That corresponds to timeout in the worker mod_proxy documentation. A value of -1 indicates no timeout. Note that mod_cluster always uses a cping/cpong before forwarding a request and the connectiontimeout value used by mod_cluster is the ping value. |
