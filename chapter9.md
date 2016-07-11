@@ -10,7 +10,8 @@
 > 
 > * **Location**: 位置
 > * **Scope**: 范围
-> * **Worker**: 应用服务器或 web 服务器，指部署 Tomcat/AS 7/Wildfly 等的服务器
+> * **Proxy**: 代理服务器，指 负载均衡所在的服务器，下文不再翻译
+> * **Worker**: 应用服务器或 web 服务器，指部署 Tomcat/AS 7/Wildfly 等的服务器，下文中不再翻译
 
 **会话流失策略（Session draining strategy）**
 
@@ -135,15 +136,15 @@ UDP 组播 ```address:port``` 来监听 httpd 代理的组播广告。需要小�
 | flushPackets | flush-packets | false | Node | Enables/disables packet flushing |
 | flushWait | flush-wait | -1 | Node | 清除包前等待的时间，以毫秒计。值为-1时表示永远等待。 |
 | ping | ping | 10 | Node | 等待 pong 来回应 ping 的时间（以秒计） |
-| smax | smax | Determined by httpd configuration | Node | Soft maximum idle connection count (that is the smax in worker mod_proxy documentation). The maximum value depends on the httpd thread configuration (ThreadsPerChild or 1). |
-| ttl | ttl | 60 | Node | Time to live (in seconds) for idle connections above smax |
-| nodeTimeout | node-timeout | -1 | Node | Timeout (in seconds) for proxy connections to a node. That is the time mod_cluster will wait for the back-end response before returning error. That corresponds to timeout in the worker mod_proxy documentation. A value of -1 indicates no timeout. Note that mod_cluster always uses a cping/cpong before forwarding a request and the connectiontimeout value used by mod_cluster is the ping value. |
-| balancer | balancer | mycluster | Node | The balancer name |
-| loadBalancingGroup | domain load-balancing-group | None | Node | If specified, load will be balanced among jvmRoutes withing the same load balancing group. A loadBalancingGroup is conceptually equivalent to a mod_jk domain directive. This is primarily used in conjunction with partitioned session replication (e.g. buddy replication). |
+| smax | smax | 由 httpd 的配置确定 | Node | 软（Soft）最大限制连接数（在 worker 的 mod_proxy 文档中也是 smax）。最大值取决于 httpd 线程配置（ThreadPerChild 或 1）。 |
+| ttl | ttl | 60 | Node | 闲置连接数高于 smax 时能够保活的时间（按秒计） |
+| nodeTimeout | node-timeout | -1 | Node | 代理连接到节点允许的超时时间（按秒计）。这是 mod_cluster 在返回错误前会等待后台响应的时间。这对应于 worker 的 mod_proxy 文档中的超时时间。值为-1时表示不会超时。注意 mod_cluster 总是在转发请求前使用一组 cping/cpong，ping 值是 mod_cluster 使用的 connectiontimeout 值。 |
+| balancer | balancer | mycluster | Node | 均衡器名字 |
+| loadBalancingGroup | domain load-balancing-group | None | Node | 如果指明，负载将会向 jvmRoutes 中的相同负载均衡组均衡来做均衡。```loadBalancingGroup``` 在概念上与 mod_jk 域指令（domain directive）等同。这主要用在与分段的会话复制（partitioned session repilication）协同（如：两人复制（buddy repilication））。 |
 
-> **Note:**
+> **注意：**
 > 
-> When nodeTimeout is not defined the ProxyTimeout directive Proxy is used. If ProxyTimeout is not defined the server timeout (Timeout) is used (default 300 seconds). nodeTimeout, ProxyTimeout or Timeout is set at the socket level.
+> 当 nodeTimeout 未被定义时， 则使用ProxyTimeout 指令。如果没有定义 ProxyTimeout，则使用服务器的超时（Timeout）（默认为300秒）。modeTimeout, ProxyTimeout 或 Timeout 是在套接字级（socket level）的集合。
 
 ## 9.3. SSL Configuration
 
