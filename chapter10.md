@@ -36,15 +36,11 @@ In general, the load factor contribution of given metric is: (load / capacity) *
 
 The DynamicLoadBalanceFactorProvider applies a time decay function to the loads returned by each metric. The aggregate load, with respect to previous load values, can be expressed by the following formula:
 
-```
-L = (L~0~ + L~1~/D + L~2~/D^2^ + L~3~/D^3^ + … + L~H~/D^H^) * (1 + D + D^2^ + D^3^ + … D^H^)
-```
+$$L = (L~0~ + L~1~/D + L~2~/D^2^ + L~3~/D^3^ + … + L~H~/D^H^) * (1 + D + D^2^ + D^3^ + … D^H^)$$
 
 … or more concisely as:
 
-```
-L = (∑^H^~i=0~ L~i~/D^i^) * (∑^H^~i=0~ D^i^)
-```
+$$L = (∑^H^~i=0~ L~i~/D^i^) * (∑^H^~i=0~ D^i^)$$
 
 … where D = decayFactor, and H = history.
 
@@ -52,8 +48,6 @@ Setting history = 0 effectively disables the time decay function and only the cu
 
 The mod_cluster load balancer expects the load factor to be an integer between 0 and 100, where 0 indicates max load and 100 indicates zero load. Therefore, the final load factor sent to the load balancer
 
-```
-L~Final~ = 100 - (L * 100)
-```
+$$L~Final~ = 100 - (L * 100)$$
 
 While you are free to write your own load metrics, the following LoadMetrics are available out of the box:
