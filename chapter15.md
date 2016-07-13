@@ -13,9 +13,9 @@ mod_cluster 发行版包括了一个演示应用来帮助展示服务器端场�
 
 还要注意这个演示应用不是用来作为负载测试工具使用的；例如：用来展示集群配置能够处理的最大负载。像这样使用它是一个很好的机会来向你展示客户端（client）可以生成的最大负载，而不是你的集群可以处理的最大负载。
 
-## 15.2. Basic Usage
+## 15.2. 基本使用
 
-To run the demo application:
+运行演示应用：
 
 1. Unpack the mod_cluster distribution on your filesystem. Here we assume it has been unzipped to ~/mod_cluster or C:\mod_cluster.
 2. Install mod_cluster into your httpd server as described at Installation of the httpd part
@@ -39,3 +39,14 @@ To run the demo application:
   C:\>cd mod_cluster\demo\client
   C:\mod_cluster\demo\client>run-demo
   ```
+![mod_cluster_demo_application_start](mod_cluster_demo_application_start.jpg)
+8. Configure the hostname and address of the httpd server, the number of client threads, etc and click the "Start" button. See Client Driver Configuration Options for details on the configuration options.
+9. Switch to the "Request Balancing" tab to see how many requests are going to each of your JBossAS/JBossWeb/Tomcat servers.
+10. Switch to the "Session Balancing" tab to see how many active sessions 2 are being hosted by each of your JBossAS/JBossWeb/Tomcat servers.
+11. Stop some of your JBossAS/JBossWeb/Tomcat servers and/or undeploy the load-demo.war from some of the servers and see the effect this has on load balancing.
+12. Restart some of your JBossAS/JBossWeb/Tomcat servers and/or re-deploy the load-demo.war to some of the servers and see the effect this has on load balancing.
+13. Experiment with adding artificial load to one or more servers to see what effect that has on load balancing. See Load Generation Scenarios for details.
+
+Most of the various panels in application interface also present information on the current status on any client threads. "Total Clients" is the number of client threads created since the last time the "Start" button was pushed. "Live Clients" is the number of threads currently running. "Failed Clients" is the number of clients that terminated abnormally; i.e. made a request that resulted in something other than an HTTP 200 response.
+
+## 15.3. Client Driver Configuration Options
