@@ -61,7 +61,7 @@ mod_cluster 使用共享的内存来保证节点描述的同步，共享的内�
 
 ## 1.5. 下载
 
-下载最新的 mod_cluster 发行版，[官网](http://www.jboss.org/mod_cluster/downloads/latest)，[github](https://github.com/Karm/mod_cluster/releases)。
+下载最新的 mod_cluster 发行版：[官网](http://www.jboss.org/mod_cluster/downloads/latest)，[github](https://github.com/Karm/mod_cluster/releases)（Karm 版）。
 
 这个版本由下列组件组成：
 
@@ -70,8 +70,8 @@ mod_cluster 使用共享的内存来保证节点描述的同步，共享的内�
 
 与此同时，你可以通过使用 Git 仓库的源文件来构建。
 
-* 构建 httpd modules [缺少锚点链接]
-* 构建 server-side components [缺少锚点链接]
+* [构建 httpd 模块](chapter4.md)
+* [构建工作者端组件](chapter8.md)
 
 ## 1.6. 配置
 
