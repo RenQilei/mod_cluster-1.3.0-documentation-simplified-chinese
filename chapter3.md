@@ -13,7 +13,11 @@ LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
 LoadModule advertise_module modules/mod_advertise.so
 ```
 
-mod_proxy 和 mod_proxy_ajp 都是标准的 httpd 模块。 mod_slotmem 则是 a shared slotmem memory provider。mod_manager 是一个从 JBoss AS/JBossWeb/Tomcat 读取信息并更新共享内存信息的模块。mod_proxy_cluster 是一个为 mod_cluster 包含均衡器的模块。 mod_advertise 是一个额外的允许 httpd 通过多路广播包广告正在监听的 mod_cluster 的 IP 和端口的模块。这个多模块架构允许用户根据需要方便地更换模块。比如他们正在使用 http 而不是 ajp，只要
+> **mod_cluster 1.2.x vs mod_cluster 1.3.x:**
+> 
+> 注意从 mod_cluster 1.3.x 开始，slotmem 模块被定义为 ```LoadModule cluster_slotmem_module modules/mod_cluster_slotmem.so``` 而不再是过去的 ```LoadModule slotmem_module modules/mod_slotmem.so```。
+
+mod_proxy 和 mod_proxy_ajp 都是标准的 httpd 模块。 mod_slotmem 是一个共享的 slotmem memory 提供者。mod_manager 是一个从 JBoss AS/JBossWeb/Tomcat 读取信息并更新共享内存信息的模块。mod_proxy_cluster 是一个为 mod_cluster 提供均衡器的模块。 mod_advertise 是一个额外的允许 httpd 通过多路广播包广告（advertise）正在监听的 mod_cluster 的 IP 和端口的模块。这个多模块架构允许用户根据需要方便地更换模块。比如他们正在使用 http 而不是 ajp，只要
 
 ```
 LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
