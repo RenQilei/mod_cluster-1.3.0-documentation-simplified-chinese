@@ -7,7 +7,7 @@
 ```
 LoadModule proxy_module modules/mod_proxy.so
 LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
-LoadModule slotmem_module modules/mod_slotmem.so
+LoadModule cluster_slotmem_module modules/mod_slotmem.so
 LoadModule manager_module modules/mod_manager.so
 LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
 LoadModule advertise_module modules/mod_advertise.so
