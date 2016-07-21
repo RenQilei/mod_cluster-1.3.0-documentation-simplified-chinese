@@ -32,7 +32,7 @@ mod_cluster 一个主要的特性就是能够使用服务器端负载度量衡�
 
 每个负载度量衡给整体节点的负载因素带来了一个值。每个度量衡的负载因素根据它们的权重进行累计。
 
-总的来说，给定度量衡的负载因素贡献为：$${{load \over capacity} * weight} \over total weight$$。
+总的来说，给定度量衡的负载因素贡献为：$${ {load \over capacity} * weight} \over total weight$$。
 
 ```DynamicLoadBalanceFactorProvider``` 有适用于每个度量衡返回的负载的时间衰减功能。与过去负载值相关的总负荷可以通过下面的公式来表达：
 
