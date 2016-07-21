@@ -36,9 +36,7 @@ mod_cluster 一个主要的特性就是能够使用服务器端负载度量衡�
 
 ```DynamicLoadBalanceFactorProvider``` 有适用于每个度量衡返回的负载的时间衰减功能。与过去负载值相关的总负荷可以通过下面的公式来表达：
 
-$$
-L = (L_0 + {L_1 \over D} + {L_2 \over D^2} + {L_3 \over D^3} + … + {L_H \over D^H}) * (1 + D + D^2 + D^3 + … D^H)
-$$
+$$L = (L_0 + {L_1 \over D} + {L_2 \over D^2} + {L_3 \over D^3} +$$ … $$+ {L_H \over D^H}) * (1 + D + D^2 + D^3 +$$ … $$+D^H)$$
 
 或更简洁：
 
